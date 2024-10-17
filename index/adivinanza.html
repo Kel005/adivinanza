@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinar la bandera</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        img {
+            width: 500px;
+            height: auto;
+            margin: 10px;
+            border: 1px solid transparent;
+        }
+        #juego, #resultado, #pregunta {
+            display: none;
+        }
+        #imagen-inicial {
+            margin-bottom: 20px;
+        }
+        .resultado-container {
+            display: flex; /* Usar flexbox */
+            justify-content: center; /* Centrar el contenido horizontalmente */
+            align-items: center; /* Centrar el contenido verticalmente */
+            margin-top: 20px; /* Espacio entre el mensaje y la imagen */
+        }
+        .bandera-final {
+            width: 30px; /* Cambia el ancho a lo que desees */
+            height: auto; /* Mantiene la proporción */
+            margin-left: 20px; /* Espacio entre el mensaje y la bandera */
+        }
+    </style>
+</head>
+<body>
+    <h1>Adivinanza de la bandera</h1>
+    <p>Piensa en una bandera, cuando estés listo presiona el botón para jugar</p>
+
+    <!-- Imagen que aparecerá al inicio -->
+    <img id="imagen-inicial" src="inicio.jpg" alt="Imagen Inicial">
+
+    <button id="empezar-btn" onclick="empezarJuego()">Empezar Juego</button>
+
+    <div id="juego">
+        <img id="imagen-cuadro" src="cuadro1.jpg" alt="Cuadro 1">
+        <div id="pregunta">
+            <p>¿Tu bandera está en este cuadro?</p>
+            <button onclick="respuesta(true)">Sí</button>
+            <button onclick="respuesta(false)">No</button>
+        </div>
+    </div>
+
+    <div id="resultado" class="resultado-container" style="display: none;">
+        <h2>Usted estaba pensando en esta bandera:</h2>
+        <img id="imagen-bandera" src="" alt="Bandera Pensada" class="bandera-final" style="display: none;">
+    </div>
+
+    <script>
+        const cuadros = [
+            { src: "111.jpg", value: 1 },
+            { src: "222.jpg", value: 2 },
+            { src: "333.jpg", value: 4 },
+            { src: "444.jpg", value: 8 },
+            { src: "555.jpg", value: 16 }
+        ];
+
+        const banderas = [
+            { src: "1.png", value: 1 },
+            { src: "2.png", value: 2 },
+            { src: "3.png", value: 3 },
+            { src: "4.png", value: 4 },
+            { src: "5.png", value: 5 },
+            { src: "6.png", value: 6 },
+            { src: "7.png", value: 7 },
+            { src: "8.png", value: 8 },
+            { src: "9.png", value: 9 },
+            { src: "10.png", value: 10 },
+            { src: "11.png", value: 11 },
+            { src: "12.png", value: 12 },
+            { src: "13.png", value: 13 },
+            { src: "14.png", value: 14 },
+            { src: "15.png", value: 15 },
+            { src: "16.png", value: 16 },
+            { src: "17.png", value: 17 },
+            { src: "18.png", value: 18 },
+            { src: "19.png", value: 19 },
+            { src: "20.png", value: 20 },
+            { src: "21.png", value: 21 },
+            { src: "22.png", value: 22 },
+            { src: "23.png", value: 23 },
+            { src: "24.png", value: 24 },
+            { src: "25.png", value: 25 },
+            { src: "26.png", value: 26 },
+            { src: "27.png", value: 27 },
+            { src: "28.png", value: 28 },
+            { src: "29.png", value: 29 },
+            { src: "30.png", value: 30 }
+        ];
+
+        let indiceCuadro = 0;
+        let suma = 0;
+
+        function empezarJuego() {
+            // Reiniciar el juego
+            indiceCuadro = 0;
+            suma = 0;
+
+            // Ocultar la imagen inicial
+            document.getElementById('imagen-inicial').style.display = 'none';
+            // Ocultar el botón de inicio
+            document.getElementById('empezar-btn').style.display = 'none';
+            // Mostrar el área de juego
+            document.getElementById('juego').style.display = 'block';
+            // Ocultar el resultado inicial si existía antes
+            document.getElementById('resultado').style.display = 'none';
+
+            mostrarCuadro();
+        }
+
+        function mostrarCuadro() {
+            if (indiceCuadro < cuadros.length) {
+                document.getElementById('imagen-cuadro').src = cuadros[indiceCuadro].src;
+                document.getElementById('pregunta').style.display = 'block';
+            } else {
+                document.getElementById('pregunta').style.display = 'none';
+                // Mostrar la bandera pensada
+                document.getElementById('imagen-bandera').src = banderas[suma - 1].src;
+                document.getElementById('resultado').style.display = 'flex'; // Cambiar a flex para que se muestre en fila
+                document.getElementById('imagen-bandera').style.display = 'block';
+            }
+        }
+
+        function respuesta(estaEnCuadro) {
+            if (estaEnCuadro) {
+                suma += cuadros[indiceCuadro].value;
+            }
+            indiceCuadro++;
+            mostrarCuadro();
+        }
+    </script>
+</body>
+</html>
